@@ -1,0 +1,113 @@
+import { makeStyles, tokens } from "@fluentui/react-components"
+
+export const useStyles = makeStyles({
+  root: {
+    minHeight: "100dvh",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: tokens.colorNeutralBackground2,
+  },
+  header: {
+    minHeight: "64px",
+    display: "flex",
+    alignItems: "center",
+    position: "sticky",
+    top: 0,
+    zIndex: 10,
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderBottom: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
+  },
+  headerInner: {
+    boxSizing: "border-box",
+    width: "100%",
+    maxWidth: "1440px",
+    margin: "0 auto",
+    padding: `0 ${tokens.spacingHorizontalL}`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: tokens.spacingHorizontalXXL,
+  },
+  brand: {
+    display: "flex",
+    alignItems: "center",
+    gap: tokens.spacingHorizontalM,
+    whiteSpace: "nowrap",
+  },
+  brandMark: {
+    width: "34px",
+    height: "34px",
+    display: "grid",
+    placeItems: "center",
+    color: tokens.colorNeutralForegroundOnBrand,
+    backgroundColor: tokens.colorBrandBackground,
+    borderRadius: tokens.borderRadiusMedium,
+  },
+  brandName: {
+    fontSize: tokens.fontSizeBase400,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  tabs: {
+    minWidth: 0,
+  },
+  main: {
+    flex: 1,
+    width: "100%",
+    maxWidth: "1440px",
+    margin: "0 auto",
+    padding: tokens.spacingHorizontalL,
+    paddingBottom: tokens.spacingVerticalXXL,
+    boxSizing: "border-box",
+  },
+  bottomNav: {
+    display: "none",
+  },
+  bottomItem: {
+    minWidth: 0,
+    flex: 1,
+    minHeight: "56px",
+    border: 0,
+    background: "transparent",
+    color: tokens.colorNeutralForeground3,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: tokens.spacingVerticalXXS,
+    font: "inherit",
+    fontSize: tokens.fontSizeBase200,
+    cursor: "pointer",
+    "&[aria-current='page']": {
+      color: tokens.colorBrandForeground1,
+      fontWeight: tokens.fontWeightSemibold,
+    },
+  },
+  bottomIcon: {
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: 1,
+  },
+  "@media (max-width: 640px)": {
+    headerInner: {
+      minHeight: "56px",
+      justifyContent: "center",
+    },
+    tabs: {
+      display: "none",
+    },
+    main: {
+      padding: tokens.spacingHorizontalM,
+      paddingBottom: "76px",
+    },
+    bottomNav: {
+      display: "flex",
+      position: "fixed",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 20,
+      backgroundColor: tokens.colorNeutralBackground1,
+      borderTop: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
+      paddingBottom: "env(safe-area-inset-bottom)",
+    },
+  },
+})
