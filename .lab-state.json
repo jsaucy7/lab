@@ -6,5 +6,13 @@
   "publisherPrefix": "lab",
   "repo": "jsaucy7/lab",
   "mainRulesetId": 25828392,
-  "mainRulesetName": "lab-main-protection"
+  "mainRulesetName": "lab-main-protection",
+  "devEnvUrl": "https://wm-dev-3787.crm.dynamics.com",
+  "devEnvId": "fc537952-2d6e-e005-9ac6-353bc34f0e13",
+  "devOrgId": "f58371b3-95d0-f111-a04e-6045bd00311b",
+  "devProfile": "dev",
+  "testEnvUrl": "https://wm-test-3787.crm.dynamics.com",
+  "testEnvId": "9474fe29-8cff-e79e-be07-f926f7a99e16",
+  "testOrgId": "f28371b3-95d0-f111-a04e-6045bd00313c",
+  "testProfile": "test"
 }
