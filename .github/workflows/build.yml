@@ -25,11 +25,13 @@ jobs:
       - name: Build (validates Dataverse solutions)
         run: dotnet build WarehouseManagement.slnx --configuration Release --no-restore
       - name: Publish package
+        if: hashFiles('src/Packages.Main/Packages.Main.csproj') != ''
         run: |
           dotnet publish src/Packages.Main/Packages.Main.csproj --configuration Release --no-build -o ./drop
           # The .pdpkg.zip is created alongside the project, not in --output; collect it for deploy
           cp src/Packages.Main/bin/Release/Packages.Main.pdpkg.zip ./drop/
       - uses: actions/upload-artifact@v4
+        if: hashFiles('src/Packages.Main/Packages.Main.csproj') != ''
         with:
           name: drop
           path: ./drop/Packages.Main.pdpkg.zip
