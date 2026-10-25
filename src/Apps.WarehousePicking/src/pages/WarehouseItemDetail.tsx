@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Lab_warehouseitemsService } from "@/generated/services/Lab_warehouseitemsService";
 import { Lab_warehousetransactionsService } from "@/generated/services/Lab_warehousetransactionsService";
 import { Lab_warehouselocationsService } from "@/generated/services/Lab_warehouselocationsService";
+import { Lab_productsService } from "@/generated/services/Lab_productsService";
 import type { Lab_warehousetransactions } from "@/generated/models/Lab_warehousetransactionsModel";
 import type { Lab_warehouselocations } from "@/generated/models/Lab_warehouselocationsModel";
 import { categoryOptionMetadata, statusOptions, transactionTypeOptionMetadata } from "@/utils/OptionSets";
@@ -19,6 +20,8 @@ import { RecordDetailForm } from "@/components/RecordDetailForm";
 import { RecordFormDialog } from "@/components/RecordFormDialog";
 import type { FormField } from "@/components/RecordFormFields";
 import { RecordGrid } from "@/components/RecordGrid";
+import BarcodeScanDialog from "@/components/BarcodeScanDialog";
+import LinkedProductImage from "@/components/LinkedProductImage";
 import { useToast } from "@/hooks/use-toast";
 import { useStyles } from "@/styles/WarehouseItemDetail.styles";
 import { errorText, servicePayload, serviceResult } from "@/utils/ServicePayload";
@@ -123,6 +126,16 @@ export default function WarehouseItemDetailPage() {
     [locations]
   );
 
+  const linkedProductId = item?._lab_productid_value;
+  const { data: linkedProduct } = useQuery({
+    queryKey: ["linkedProduct", linkedProductId],
+    queryFn: async () => {
+      const result = await serviceResult(Lab_productsService.get(linkedProductId!));
+      return result.data;
+    },
+    enabled: !!linkedProductId,
+  });
+
   // The item as the detail form's record: reloads the form whenever the item is refetched
   const itemRecord = useMemo(
     () =>
@@ -224,6 +237,22 @@ export default function WarehouseItemDetailPage() {
             fields={itemFields}
             columnCount={3}
             title={item.lab_name ?? ""}
+            headerExtras={
+              <>
+                <BarcodeScanDialog
+                  itemId={id!}
+                  currentProductId={linkedProductId}
+                  onLinked={() => queryClient.invalidateQueries()}
+                />
+                {linkedProduct && (
+                  <div className={styles.inline} data-testid="linked-product-name">
+                    <LinkedProductImage productId={linkedProductId!} />
+                    <Body1 className={styles.muted}>Linked product:</Body1>
+                    <Body1 className={styles.name}>{linkedProduct.lab_name}</Body1>
+                  </div>
+                )}
+              </>
+            }
             onBack={() => navigate("/items")}
             lookupRecords={{ lab_locationid: locationRecords }}
             onSave={(values) => updateItemMutation.mutateAsync(values)}
